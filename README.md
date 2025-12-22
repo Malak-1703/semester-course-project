@@ -1,5 +1,44 @@
 # semester-course-project
 
+### Module Assignments
+
+- **Adam**
+  - `src/array_list.c`
+  - `src/linked_list.c`
+
+- **Malak**
+  - `src/stack.c`
+
+- **Marwa**
+  - `src/queue.c`
+  - `src/priority_queue.c`
+
+- **Hamza**
+  - `src/search.c`
+
+- **Yassine**
+  - `src/sort.c`
+  - `src/tree.c`
+
+- **Haytam**
+  - `src/graph.c`
+
+### Responsibility Rules
+
+- Each member is responsible for:
+  - Correct implementation of assigned modules
+  - Memory safety and correctness
+  - Compliance with function contracts defined in header files
+- No member may modify another module’s public interface without team approval
+- Integration is performed only after all modules respect their documented behavior
+
+### Oral Defense Note
+
+During the oral defense, each team member must be able to:
+- Explain the design choices of their assigned data structures
+- Justify algorithmic complexity
+- Describe how their module interacts with the rest of the system
+
 ### Design Rule
 
 All behavioral rules and module responsibilities are defined in the `.h` files.  
