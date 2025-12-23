@@ -1,41 +1,64 @@
 #include "../include/array_list.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-#define INITIAL_CAPACITY 10
-
-void array_list_init(ArrayList *list) {
+void array_init(ArrayList *list, int capacity) {
     list->size = 0;
-    list->capacity = INITIAL_CAPACITY;
-    list->data = (LoginRecord *)malloc(list->capacity * sizeof(LoginRecord));
-    if (!list->data) exit(EXIT_FAILURE);
+    list->capacity = capacity;
+    list->data = (LoginRecord *)malloc(capacity * sizeof(LoginRecord));
+    if (!list->data) {
+        perror("Erreur d'allocation array_init");
+        exit(EXIT_FAILURE);
+    }
 }
 
-void array_list_add(ArrayList *list, LoginRecord record) {
+void array_insert(ArrayList *list, LoginRecord record) {
+    // Redimensionnement automatique si plein
     if (list->size >= list->capacity) {
         list->capacity *= 2;
         LoginRecord *temp = (LoginRecord *)realloc(list->data, list->capacity * sizeof(LoginRecord));
-        if (!temp) return;
+        if (!temp) {
+            perror("Erreur de reallocation array_insert");
+            return;
+        }
         list->data = temp;
     }
-    list->data[list->size++] = record;
+    
+    list->data[list->size] = record;
+    list->size++;
 }
 
-void array_list_remove_at(ArrayList *list, size_t index) {
-    if (index >= list->size) return;
-    for (size_t i = index; i < list->size - 1; i++) {
+void array_delete(ArrayList *list, int index) {
+    if (index < 0 || index >= list->size) {
+        printf("Index invalide pour suppression\n");
+        return;
+    }
+
+    // Décalage des éléments vers la gauche
+    for (int i = index; i < list->size - 1; i++) {
         list->data[i] = list->data[i + 1];
     }
     list->size--;
 }
 
-LoginRecord* array_list_get(ArrayList *list, size_t index) {
-    if (index >= list->size) return NULL;
-    return &list->data[index];
+void array_print(const ArrayList *list) {
+    printf("=== ARRAY LIST CONTENT (%d records) ===\n", list->size);
+    for (int i = 0; i < list->size; i++) {
+        printf("[%s] User: %s | IP: %s | Success: %d\n",
+               list->data[i].timestamp,
+               list->data[i].username,
+               list->data[i].ip,
+               list->data[i].success);
+    }
+    printf("=======================================\n");
 }
 
-void array_list_free(ArrayList *list) {
-    free(list->data);
+void array_free(ArrayList *list) {
+    if (list->data) {
+        free(list->data);
+        list->data = NULL;
+    }
     list->size = 0;
     list->capacity = 0;
 }
