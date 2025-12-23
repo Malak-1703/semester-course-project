@@ -11,7 +11,6 @@ void list_insert(Node **head, LoginRecord record) {
         return;
     }
     
-    // Attention: ton .h appelle le champ 'record', pas 'data'
     new_node->record = record;
     new_node->next = *head;
     *head = new_node;
@@ -63,3 +62,4 @@ void list_free(Node *head) {
         free(temp);
     }
 }
+
